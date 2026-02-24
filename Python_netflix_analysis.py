@@ -1,10 +1,5 @@
 """
-Netflix Content Analysis & Recommendation System
-=================================================
-Python port of the original R analysis script.
-Uses synthetic demo data to showcase all visualizations and models.
-
-Sections:
+Netflix Content Analysis & Recommendation System Sections:
   1. Data Generation & Preprocessing
   2. Exploratory Data Analysis (EDA)
   3. Visualizations
