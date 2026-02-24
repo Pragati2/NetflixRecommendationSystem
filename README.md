@@ -4,7 +4,6 @@
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
 ![R](https://img.shields.io/badge/R-4.2%2B-276DC3?logo=r)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
 *End-to-end analysis of the Netflix catalogue — EDA, genre analysis, a collaborative-filtering recommender, and IMDb rating prediction.*
