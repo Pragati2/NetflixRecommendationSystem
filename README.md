@@ -14,7 +14,7 @@
 
 ## Dashboard Overview
 
-![Dashboard](outputs/00_dashboard.png)
+![Dashboard](Outputs/00_dashboard.png)
 
 ---
 
@@ -24,7 +24,7 @@
 netflix-analysis/
 ├── netflix_analysis.py   # Python implementation (self-contained, demo data)
 ├── netflix_analysis.R    # Cleaned R script (requires real datasets)
-├── outputs/              # All generated plots
+├── Outputs/              # All generated plots
 └── README.md
 ```
 
@@ -64,54 +64,54 @@ source("netflix_analysis.R")
 ## Visualisations
 
 ### 1 · Content Type Split
-![Content Type](outputs/01_content_type_pie.png)
+![Content Type](Outputs/01_content_type_pie.png)
 > 70 % Movies vs 30 % TV Shows on the platform.
 
 ---
 
 ### 2 · Top 10 Countries
-![Top Countries](outputs/02_top_countries_stacked.png)
+![Top Countries](Outputs/02_top_countries_stacked.png)
 > United States dominates, followed by India and the United Kingdom.
 
 ---
 
 ### 3 · Content Growth Over Time
-![Content Over Time](outputs/03_content_over_time.png)
+![Content Over Time](Outputs/03_content_over_time.png)
 > Rapid library expansion between 2015 and 2020.
 
 ---
 
 ### 4 · Rating Distribution
-![Ratings](outputs/04_rating_distribution.png)
+![Ratings](Outputs/04_rating_distribution.png)
 > TV-MA and TV-14 account for the majority of content.
 
 ---
 
 ### 5 · Top 20 Genres
-![Genres](outputs/05_top_genres.png)
+![Genres](Outputs/05_top_genres.png)
 > Drama and Comedy are the most frequent categories.
 
 ---
 
 ### 6 · Movie Duration by Country
-![Duration Boxplots](outputs/06_duration_boxplots.png)
+![Duration Boxplots](Outputs/06_duration_boxplots.png)
 > Indian movies tend to be the longest; South Korean titles the shortest.
 
 ---
 
 ### 7 · Genre Co-occurrence Heatmap
-![Genre Heatmap](outputs/07_genre_correlation_heatmap.png)
+![Genre Heatmap](Outputs/07_genre_correlation_heatmap.png)
 > Drama + Comedy and Drama + Thriller are the most common genre pairings.
 
 ---
 
 ### 8 · Top Directors & Actors
-![Directors and Actors](outputs/08_top_directors_actors.png)
+![Directors and Actors](Outputs/08_top_directors_actors.png)
 
 ---
 
 ### 9 · Word Frequency in Descriptions
-![Word Frequency](outputs/09_word_frequency.png)
+![Word Frequency](Outputs/09_word_frequency.png)
 
 ---
 
@@ -120,7 +120,7 @@ source("netflix_analysis.R")
 Item-Based Collaborative Filtering (IBCF) using **cosine similarity** on a user × item rating matrix. The model finds the *k* most similar items to those a user has already rated and surfaces the highest-scoring unseen titles.
 
 ### Item Similarity Heatmap (first 20 items)
-![Item Similarity](outputs/10_item_similarity_heatmap.png)
+![Item Similarity](Outputs/10_item_similarity_heatmap.png)
 
 **Sample recommendations for User 0:**
 ```
@@ -143,10 +143,10 @@ Two models are trained to predict IMDb `weighted_average_vote` from metadata fea
 | Gradient Boosting | 1.25 |
 
 ### Feature Importance (Gradient Boosting)
-![Feature Importance](outputs/11_feature_importance.png)
+![Feature Importance](Outputs/11_feature_importance.png)
 
 ### Actual vs Predicted Ratings
-![Actual vs Predicted](outputs/12_actual_vs_predicted.png)
+![Actual vs Predicted](Outputs/12_actual_vs_predicted.png)
 
 ---
 
@@ -154,7 +154,7 @@ Two models are trained to predict IMDb `weighted_average_vote` from metadata fea
 
 TF-IDF scores surface the most **distinctive** words per title, beyond simple frequency.
 
-![TF-IDF](outputs/13_tfidf_terms.png)
+![TF-IDF](Outputs/13_tfidf_terms.png)
 
 ---
 
