@@ -29,7 +29,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import Counter
 import re
 
-# ── Aesthetics ──────────────────────────────────────────────────────────────
+# Aesthetics 
 NETFLIX_RED  = "#E50914"
 NETFLIX_DARK = "#141414"
 PALETTE      = ["#E50914", "#1f77b4", "#9467bd", "#ff7f0e", "#2ca02c",
@@ -54,9 +54,8 @@ import os
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-# ============================================================================
 # 1.  DEMO DATA GENERATION
-# ============================================================================
+
 np.random.seed(42)
 
 COUNTRIES   = ["United States", "India", "United Kingdom", "Canada",
@@ -73,7 +72,7 @@ N = 6000   # total titles
 def _sample(seq, size, replace=True, p=None):
     return np.random.choice(seq, size=size, replace=replace, p=p)
 
-# ── Netflix catalogue ───────────────────────────────────────────────────────
+#  Netflix catalogue 
 dates = pd.date_range("2010-01-01", "2023-12-31", periods=N)
 netflix_df = pd.DataFrame({
     "show_id":      [f"s{i}" for i in range(1, N + 1)],
@@ -95,7 +94,7 @@ netflix_df = pd.DataFrame({
                      for g in _sample(GENRES, N)],
 })
 
-# ── IMDB supplement ─────────────────────────────────────────────────────────
+# ── IMDB supplement 
 imdb_df = netflix_df[["title"]].copy()
 imdb_df["weighted_average_vote"] = np.clip(
     np.random.normal(6.5, 1.2, N), 1, 10).round(1)
@@ -109,9 +108,9 @@ print(f"✅ Dataset created — Netflix: {len(netflix_df)} titles | Joint: {len(
 print(f"   Columns: {list(netflix_df.columns)}\n")
 
 
-# ============================================================================
+
 # 2.  PREPROCESSING
-# ============================================================================
+
 
 def fill_mode(series: pd.Series) -> pd.Series:
     """Fill NaN values with the mode."""
@@ -126,9 +125,7 @@ print(f"After dedup: {len(netflix_df)} rows")
 print(f"Missing values per column:\n{netflix_df.isnull().sum()}\n")
 
 
-# ============================================================================
 # 3.  VISUALISATIONS
-# ============================================================================
 
 def save_fig(fig, name: str):
     path = os.path.join(OUTPUT_DIR, name)
@@ -138,7 +135,7 @@ def save_fig(fig, name: str):
     print(f"  💾 Saved → {path}")
 
 
-# ── 3.1  Content type distribution (Pie) ────────────────────────────────────
+#  3.1  Content type distribution (Pie) 
 type_counts = netflix_df["type"].value_counts()
 
 fig, ax = plt.subplots(figsize=(7, 7))
@@ -160,7 +157,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "01_content_type_pie.png")
 
 
-# ── 3.2  Top 10 countries (Stacked bar) ─────────────────────────────────────
+#  3.2  Top 10 countries (Stacked bar) 
 country_type = (netflix_df.groupby(["country", "type"])
                            .size()
                            .reset_index(name="count"))
@@ -183,7 +180,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "02_top_countries_stacked.png")
 
 
-# ── 3.3  Content added over time (Cumulative line) ──────────────────────────
+#  3.3  Content added over time (Cumulative line) 
 time_df = (netflix_df.groupby(["date_added", "type"])
                       .size()
                       .reset_index(name="added_today"))
@@ -212,7 +209,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "03_content_over_time.png")
 
 
-# ── 3.4  Content rating distribution ────────────────────────────────────────
+#  3.4  Content rating distribution 
 rating_counts = netflix_df["rating"].value_counts()
 
 fig, ax = plt.subplots(figsize=(10, 5))
@@ -231,7 +228,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "04_rating_distribution.png")
 
 
-# ── 3.5  Top 20 genres ───────────────────────────────────────────────────────
+#  3.5  Top 20 genres 
 all_genres = []
 for g in netflix_df["listed_in"]:
     all_genres.extend([x.strip() for x in g.split(",")])
@@ -249,7 +246,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "05_top_genres.png")
 
 
-# ── 3.6  Movie duration box-plots by country ────────────────────────────────
+#  3.6  Movie duration box-plots by country 
 movies = netflix_df[netflix_df["type"] == "Movie"].copy()
 movies["duration_min"] = movies["duration"].str.extract(r"(\d+)").astype(float)
 
@@ -274,7 +271,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "06_duration_boxplots.png")
 
 
-# ── 3.7  Genre correlation heatmap ─────────────────────────────────────────
+#  3.7  Genre correlation heatmap 
 from itertools import combinations
 
 def genre_cooccurrence(df, content_type):
@@ -303,7 +300,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "07_genre_correlation_heatmap.png")
 
 
-# ── 3.8  Top directors & actors ─────────────────────────────────────────────
+#  3.8  Top directors & actors 
 dir_counts = netflix_df["director"].value_counts().head(10)
 act_all = []
 for row in netflix_df["cast"]:
@@ -329,7 +326,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "08_top_directors_actors.png")
 
 
-# ── 3.9  Simulated word-cloud (bar chart fallback) ───────────────────────────
+#  3.9  Simulated word-cloud (bar chart fallback) 
 all_words = []
 for desc in joint_df["description"]:
     all_words.extend(re.findall(r"\b[a-z]{4,}\b", desc.lower()))
@@ -351,9 +348,8 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "09_word_frequency.png")
 
 
-# ============================================================================
 # 4.  RECOMMENDATION SYSTEM  (Item-Based CF via Cosine Similarity)
-# ============================================================================
+
 print("\n" + "="*60)
 print("4. RECOMMENDATION SYSTEM (IBCF)")
 print("="*60)
@@ -392,7 +388,7 @@ for rank, item_idx in enumerate(recs_user0, 1):
     label = title[0] if len(title) else sid
     print(f"  {rank:>2}. {label}")
 
-# ── Similarity heatmap (first 20 items) ─────────────────────────────────────
+#  Similarity heatmap (first 20 items) 
 item_mat_20 = np.nan_to_num(rating_matrix[:, :20].T)
 sim_20 = cosine_similarity(item_mat_20)
 
@@ -408,9 +404,8 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "10_item_similarity_heatmap.png")
 
 
-# ============================================================================
 # 5.  PREDICTIVE MODELLING
-# ============================================================================
+
 print("\n" + "="*60)
 print("5. PREDICTIVE MODELLING")
 print("="*60)
@@ -436,13 +431,13 @@ y = model_df["weighted_average_vote"]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
 
-# ── 5a. Linear Regression ──────────────────────────────────────────────────
+#  5a. Linear Regression 
 lr = LinearRegression().fit(X_train, y_train)
 y_pred_lr = lr.predict(X_test)
 rmse_lr = np.sqrt(mean_squared_error(y_test, y_pred_lr))
 print(f"\n📈 Linear Regression  — RMSE: {rmse_lr:.4f}")
 
-# ── 5b. Gradient Boosting ─────────────────────────────────────────────────
+#  5b. Gradient Boosting 
 gb = GradientBoostingRegressor(
     n_estimators=200, max_depth=4,
     learning_rate=0.05, random_state=42
@@ -451,7 +446,7 @@ y_pred_gb = gb.predict(X_test)
 rmse_gb = np.sqrt(mean_squared_error(y_test, y_pred_gb))
 print(f"🚀 Gradient Boosting — RMSE: {rmse_gb:.4f}")
 
-# ── Feature importance plot ─────────────────────────────────────────────────
+#  Feature importance plot 
 importance = pd.Series(gb.feature_importances_, index=FEATURES).sort_values()
 
 fig, ax = plt.subplots(figsize=(9, 5))
@@ -465,7 +460,7 @@ ax.grid(axis="x")
 fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "11_feature_importance.png")
 
-# ── Actual vs Predicted scatter ─────────────────────────────────────────────
+#  Actual vs Predicted scatter 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 for ax, y_pred, title, color in zip(
         axes,
@@ -487,9 +482,8 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "12_actual_vs_predicted.png")
 
 
-# ============================================================================
 # 6.  TF-IDF TEXT ANALYSIS
-# ============================================================================
+
 print("\n" + "="*60)
 print("6. TF-IDF TEXT ANALYSIS")
 print("="*60)
@@ -519,7 +513,7 @@ fig.patch.set_facecolor(NETFLIX_DARK)
 save_fig(fig, "13_tfidf_terms.png")
 
 
-# ── Summary dashboard ────────────────────────────────────────────────────────
+#  Summary dashboard 
 fig = plt.figure(figsize=(18, 10))
 fig.patch.set_facecolor(NETFLIX_DARK)
 
@@ -568,7 +562,7 @@ fig.suptitle("Netflix Content Analysis — Dashboard",
 save_fig(fig, "00_dashboard.png")
 
 
-# ── Final summary ────────────────────────────────────────────────────────────
+# ── Final summary ───
 print("\n" + "="*60)
 print("✅  ANALYSIS COMPLETE")
 print("="*60)
